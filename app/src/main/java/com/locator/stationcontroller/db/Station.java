@@ -2,41 +2,43 @@ package com.locator.stationcontroller.db;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import java.util.Objects;
 
 @Entity
 public class Station {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    public int id;
 
     @ColumnInfo
-    private String name;
+    public String name;
 
     @ColumnInfo
-    private String voltage;
+    public String phone1;
 
     @ColumnInfo
-    private boolean r1;
+    public String phone2;
 
     @ColumnInfo
-    private boolean r2;
+    public String sms1;
 
     @ColumnInfo
-    private String phone1;
+    public String sms2;
 
     @ColumnInfo
-    private String phone2;
+    public String sms3;
 
     @ColumnInfo
-    private String sms1;
+    public float voltage;
 
     @ColumnInfo
-    private String sms2;
+    public boolean r1;
 
     @ColumnInfo
-    private String sms3;
+    public boolean r2;
+
+    @Ignore
+    public boolean isEditing;
 
     @Override
     public boolean equals(Object o) {
@@ -67,35 +69,14 @@ public class Station {
         this.name = name;
     }
 
-    public String getVoltage() {
-        return voltage;
-    }
-
-    public void setVoltage(String voltage) {
-        this.voltage = voltage;
-    }
-
-    public boolean isR1() {
-        return r1;
-    }
-
-    public void setR1(boolean r1) {
-        this.r1 = r1;
-    }
-
-    public boolean isR2() {
-        return r2;
-    }
-
-    public void setR2(boolean r2) {
-        this.r2 = r2;
-    }
-
     public String getPhone1() {
         return phone1;
     }
 
     public void setPhone1(String phone1) {
+        if(phone1.startsWith("0")){
+            phone1 = phone1.replace("0","+374");
+        }
         this.phone1 = phone1;
     }
 
@@ -104,6 +85,9 @@ public class Station {
     }
 
     public void setPhone2(String phone2) {
+        if(phone2.startsWith("0")){
+            phone2 = phone2.replace("0","+374");
+        }
         this.phone2 = phone2;
     }
 
@@ -128,6 +112,53 @@ public class Station {
     }
 
     public void setSms3(String sms3) {
+        this.sms3 = sms3;
+    }
+
+    public float getVoltage() {
+        return voltage;
+    }
+
+    public void setVoltage(float voltage) {
+        this.voltage = voltage;
+    }
+
+    public boolean isR1() {
+        return r1;
+    }
+
+    public void setR1(boolean r1) {
+        this.r1 = r1;
+    }
+
+    public boolean isR2() {
+        return r2;
+    }
+
+    public void setR2(boolean r2) {
+        this.r2 = r2;
+    }
+
+    public boolean isEditing() {
+        return isEditing;
+    }
+
+    public void setEditing(boolean editing) {
+        isEditing = editing;
+    }
+
+    public Station(String name, String phone1, String phone2, String sms1, String sms2, String sms3) {
+        if(phone1.startsWith("0")){
+            phone1 = phone1.replace("0","+374");
+        }
+        if(phone2.startsWith("0")){
+            phone2 = phone2.replace("0","+374");
+        }
+        this.name = name;
+        this.phone1 = phone1;
+        this.phone2 = phone2;
+        this.sms1 = sms1;
+        this.sms2 = sms2;
         this.sms3 = sms3;
     }
 }

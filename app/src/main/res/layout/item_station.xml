@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/voltage_text_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/voltage_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toRightOf="@id/name_text_view"
+            app:layout_constraintRight_toLeftOf="@id/edit_image_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/r1_toggle_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:textOff="@string/r1_off"
+            android:textOn="@string/r1_on"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_text_view" />
+
+        <ToggleButton
+            android:id="@+id/r2_toggle_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:textOff="@string/r2_off"
+            android:textOn="@string/r2_on"
+            app:layout_constraintLeft_toRightOf="@id/r1_toggle_button"
+            app:layout_constraintRight_toRightOf="@id/voltage_text_view"
+            app:layout_constraintTop_toBottomOf="@id/voltage_text_view" />
+
+        <Button
+            android:id="@+id/send_sms1_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ON"
+            app:layout_constraintTop_toBottomOf="@id/r1_toggle_button"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <Button
+            android:id="@+id/send_sms2_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OFF"
+            app:layout_constraintTop_toBottomOf="@id/r2_toggle_button"
+            app:layout_constraintRight_toRightOf="@id/r2_toggle_button"/>
+
+        <Button
+            android:id="@+id/send_sms3_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ST"
+            app:layout_constraintTop_toBottomOf="@id/r2_toggle_button"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <ImageView
+            android:id="@+id/edit_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

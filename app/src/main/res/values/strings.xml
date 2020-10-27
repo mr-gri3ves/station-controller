@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">StationController</string>
     <string name="name">Name</string>
-    <string name="tel_1">Tel 1</string>
-    <string name="tel_2">Tel 2</string>
+    <string name="phone_1">Phone 1</string>
+    <string name="phone_2">Phone 2</string>
     <string name="sms_1">Sms 1</string>
     <string name="sms_2">Sms 2</string>
     <string name="sms_3">Sms 3</string>
@@ -17,4 +17,5 @@
     <string name="no_voltage">V = N/A</string>
     <string name="choose_phone">Please choose phone number</string>
     <string name="ok">OK</string>
+    <string name="create">Create</string>
 </resources>
