@@ -161,14 +161,17 @@ public class Synchronizer {
                 return null;
             }
 
+            for(int i =0; i < lines.length; ++i){
+                lines[i] = lines[i].replaceAll(" ","");
+            }
+
             if (!lines[0].matches(REGEX_U_BAT) || !lines[1].matches(KEY_OUT1) || !lines[2].matches(KEY_OUT2)) {
                 return null;
             }
 
-
-            float voltage = Float.parseFloat(lines[0].split(REGEX_EQUAL)[1].replaceAll(" ", ""));
-            boolean r1 = "1".equals(lines[1].split(REGEX_EQUAL)[1].replaceAll(" ", ""));
-            boolean r2 = "1".equals(lines[2].split(REGEX_EQUAL)[1].replaceAll(" ", ""));
+            float voltage = Float.parseFloat(lines[0].split(REGEX_EQUAL)[1]);
+            boolean r1 = "1".equals(lines[1].split(REGEX_EQUAL)[1]);
+            boolean r2 = "1".equals(lines[2].split(REGEX_EQUAL)[1]);
 
             return new ProcessedSms(sms.phone, r1, r2, voltage, sms.date);
         }
