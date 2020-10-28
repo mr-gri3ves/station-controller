@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendSms(String message, String... phones) {
         if (phones.length == 1) {
-            Utils.sendSms(phones[0], message, null, null);
+            Utils.sendSms(phones[0], message);
             return;
         }
         new AlertDialog.Builder(this)

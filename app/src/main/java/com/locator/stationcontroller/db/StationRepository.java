@@ -12,7 +12,7 @@ public class StationRepository {
     private static StationRepository instance;
 
     @NonNull
-    private StationDao stationDao;
+    private final StationDao stationDao;
 
     private StationRepository(@NonNull StationDatabase stationDatabase) {
         this.stationDao = stationDatabase.stationDao();
