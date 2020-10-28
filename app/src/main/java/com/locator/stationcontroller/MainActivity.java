@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -19,18 +18,16 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.locator.stationcontroller.adapter.StationAdapter;
-import com.locator.stationcontroller.db.QueryListener;
 import com.locator.stationcontroller.db.Station;
 import com.locator.stationcontroller.db.StationRepository;
+import com.locator.stationcontroller.utils.Synchronizer;
 import com.locator.stationcontroller.utils.Utils;
 import com.locator.stationcontroller.utils.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -120,10 +117,6 @@ public class MainActivity extends AppCompatActivity {
         }
         Station syncedStation = Synchronizer.syncStation(this, station);
         stationRepository.insert(ids -> {
-            if (ids.size() == 0) {
-                Toast.makeText(this, "Station was not added", Toast.LENGTH_SHORT).show();
-                return;
-            }
             stationAdapter.addStation(syncedStation);
             stationAddDialog.dismiss();
         }, syncedStation);
@@ -147,10 +140,6 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .setPositiveButton("Yes", (dialog, which) -> {
                     stationRepository.delete(affectedRows -> {
-                        if (affectedRows == 0) {
-                            Toast.makeText(this, "Station was not deleted", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
                         stationAdapter.removeStation(station);
                     }, station);
                 }).show();

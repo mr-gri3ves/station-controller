@@ -1,4 +1,4 @@
-package com.locator.stationcontroller;
+package com.locator.stationcontroller.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -152,19 +152,23 @@ public class Synchronizer {
 
         @Nullable
         public static ProcessedSms process(@NonNull Sms sms) {
-            if (!Validator.validate(sms.message).isSuccess()) {
-                return null;
-            }
-            final String REGEX = "=";
+            final String REGEX_EQUAL = "=";
+            final String REGEX_U_BAT = "U_Bat=([0-9]*[.])?[0-9]+";
+            final String KEY_OUT1 = "Out1=[0-1]";
+            final String KEY_OUT2 = "Out2=[0-1]";
             String[] lines = sms.message.split(System.getProperty("line.separator"));
             if (lines.length != 3) {
-                lines = sms.message.split("\n");
+                return null;
+            }
+
+            if (!lines[0].matches(REGEX_U_BAT) || !lines[1].matches(KEY_OUT1) || !lines[2].matches(KEY_OUT2)) {
+                return null;
             }
 
 
-            float voltage = Float.parseFloat(lines[0].split(REGEX)[1].replaceAll(" ", ""));
-            boolean r1 = "1".equals(lines[1].split(REGEX)[1].replaceAll(" ", ""));
-            boolean r2 = "1".equals(lines[2].split(REGEX)[1].replaceAll(" ", ""));
+            float voltage = Float.parseFloat(lines[0].split(REGEX_EQUAL)[1].replaceAll(" ", ""));
+            boolean r1 = "1".equals(lines[1].split(REGEX_EQUAL)[1].replaceAll(" ", ""));
+            boolean r2 = "1".equals(lines[2].split(REGEX_EQUAL)[1].replaceAll(" ", ""));
 
             return new ProcessedSms(sms.phone, r1, r2, voltage, sms.date);
         }

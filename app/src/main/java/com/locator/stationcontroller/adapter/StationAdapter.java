@@ -92,8 +92,6 @@ public class StationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 station.setSms2(stationEditViewHolder.sms2EditText.getText().toString());
                 station.setSms3(stationEditViewHolder.sms3EditText.getText().toString());
                 activity.updateStation(station);
-                station.isEditing = false;
-                notifyItemChanged(position);
             });
         }
 
@@ -139,6 +137,7 @@ public class StationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return;
         }
         this.stations.set(index, station);
+        station.setEditing(false);
         notifyItemChanged(index);
     }
 
