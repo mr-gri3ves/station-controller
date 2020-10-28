@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -15,6 +16,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsMessage;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.locator.stationcontroller.adapter.StationAdapter;
+import com.locator.stationcontroller.db.QueryListener;
 import com.locator.stationcontroller.db.Station;
 import com.locator.stationcontroller.db.StationRepository;
 import com.locator.stationcontroller.utils.Synchronizer;
@@ -80,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView stationsRecyclerView = findViewById(R.id.stations_recycler_view);
         stationsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         stationsRecyclerView.setAdapter(stationAdapter);
+    }
+
+    private void setRefresher(){
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            getStations();
+            new Handler().postDelayed(() -> swipeRefreshLayout.setRefreshing(false),1000);
+        });
     }
 
     public void showAddStation(View view) {
@@ -183,13 +194,15 @@ public class MainActivity extends AppCompatActivity {
                     if (syncedStations.isEmpty()) {
                         return;
                     }
-                    stationRepository.update(null, stations.toArray(new Station[0]));
-                    for (Station station : syncedStations) {
-                        stationAdapter.updateStation(station);
-                    }
+                    stationRepository.update(integer -> {
+                        for (Station station : syncedStations) {
+                            stationAdapter.updateStation(station);
+                        }
+                    }, stations.toArray(new Station[0]));
                 });
             }
         };
         registerReceiver(smsBroadcastReceiver, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
+        setRefresher();
     }
 }

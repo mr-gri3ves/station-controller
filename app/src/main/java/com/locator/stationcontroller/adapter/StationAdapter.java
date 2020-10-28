@@ -120,25 +120,35 @@ public class StationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void removeStation(@NonNull Station station) {
-        int index = this.stations.indexOf(station);
-        this.stations.remove(station);
+        int index = -1;
+        for(int i = 0 ;i < stations.size(); ++i){
+            if(stations.get(i).equals(station)){
+                index = i;
+            }
+        }
+
+        if(index == -1){
+            return;
+        }
+
+        this.stations.remove(index);
         notifyItemRemoved(index);
     }
 
     public void updateStation(@NonNull Station station) {
         int index = -1;
-        for (int i = 0; i < stations.size(); ++i) {
-            if (stations.get(i).equals(station)) {
+        for(int i = 0 ;i < stations.size(); ++i){
+            if(stations.get(i).equals(station)){
                 index = i;
-                break;
             }
         }
-        if (index == -1) {
+
+        if(index == -1){
             return;
         }
-        this.stations.set(index, station);
         station.setEditing(false);
-        notifyItemChanged(index);
+        this.stations.set(index,station);
+        notifyItemChanged(index);;
     }
 
     public static class StationViewHolder extends RecyclerView.ViewHolder {

@@ -48,11 +48,6 @@ public class Station {
         return id == station.id;
     }
 
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
     public int getId() {
         return id;
     }
