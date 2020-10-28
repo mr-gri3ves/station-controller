@@ -183,11 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     if (syncedStations.isEmpty()) {
                         return;
                     }
-                    stationRepository.update(integer -> {
-                        if (integer != syncedStations.size()) {
-                            Toast.makeText(context, "Some stations were not synced", Toast.LENGTH_SHORT).show();
-                        }
-                    }, stations.toArray(new Station[0]));
+                    stationRepository.update(null, stations.toArray(new Station[0]));
                     for (Station station : syncedStations) {
                         stationAdapter.updateStation(station);
                     }
